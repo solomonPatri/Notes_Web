@@ -6,6 +6,7 @@ using Notes_Web.Notes.Model;
 using System.Data.Entity;
 using Microsoft.EntityFrameworkCore;
 using Notes_Web.Notes.Repository;
+using System.Globalization;
 
 namespace Notes_Web.Notes.Repository
 {
@@ -24,7 +25,7 @@ namespace Notes_Web.Notes.Repository
 
         public async Task<GetAllNotesDto> GetAllNotesAsync()
         {
-            IList<Note> data = await _appdbcontext.Notes.ToListAsync();
+           List<Note> data = await _appdbcontext.Notes.ToListAsync();
 
             var responsenote = data.Select(m => _mapper.Map<NotesResponse>(m)).ToList();
             GetAllNotesDto response = new GetAllNotesDto();
@@ -150,15 +151,24 @@ namespace Notes_Web.Notes.Repository
 
         }
 
-        public async Task<NotesResponse> FindNoteByTitleASync(string title)
+      public async Task<NotesResponse?> FindNoteByTitleAsync(NotesRequest request)
         {
-            Note notes = await _appdbcontext.Notes.FirstOrDefaultAsync(s => s.Title.Equals(title));
+            var entity = await _appdbcontext.Notes
+                     .Where(m => m.Title == request.Title
+                            && m.Content != request.Content
+                            && m.Color != request.Color
+                            && m.Date_Created != request.Date_Created
+                            && m.Date_Modified != request.Date_Modified
+                            && m.Priority!=request.Priority
+                            && m.Favorite!=request.Favorite)
+                            .FirstOrDefaultAsync();
 
-            NotesResponse response = _mapper.Map<NotesResponse>(notes);
-          
-           
-            return response;
+            if(entity == null)
+            {
+                return null;
+            }
 
+            return _mapper.Map<NotesResponse>(entity);
 
 
 

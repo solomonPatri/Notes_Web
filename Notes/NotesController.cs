@@ -9,13 +9,13 @@ namespace Notes_Web.Notes
 {
     [ApiController]
     [Route("api/v1/[Controller]")]
-    public class NotesController:ControllerBase
+    public class NotesController : ControllerBase
     {
         private readonly IQueryService _query;
         private readonly ICommandService _command;
 
 
-        public NotesController(IQueryService query,ICommandService command)
+        public NotesController(IQueryService query, ICommandService command)
         {
             this._command = command;
             this._query = query;
@@ -29,9 +29,10 @@ namespace Notes_Web.Notes
             {
                 GetAllNotesDto response = await this._query.GetAllNotesAsync();
 
-               return Ok(response);
+                return Ok(response);
 
-            }catch(NotesNotFoundException ex)
+            }
+            catch (NotesNotFoundException ex)
             {
                 return NotFound(ex.Message);
 
@@ -45,7 +46,7 @@ namespace Notes_Web.Notes
         }
 
         [HttpPost("create")]
-        public async Task<ActionResult<NotesResponse>> CreateNoteASync([FromBody]NotesRequest create)
+        public async Task<ActionResult<NotesResponse>> CreateNoteASync([FromBody] NotesRequest create)
         {
             try
             {
@@ -53,7 +54,8 @@ namespace Notes_Web.Notes
                 return Created("", response);
 
 
-            }catch(NotesAlreadyExistDto ex)
+            }
+            catch (NotesAlreadyExistDto ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -71,7 +73,8 @@ namespace Notes_Web.Notes
                 NotesResponse response = await _command.DeleteAsync(id);
                 return Accepted("", response);
 
-            }catch(NotesNotFoundException nf)
+            }
+            catch (NotesNotFoundException nf)
             {
                 return NotFound(nf.Message);
             }
@@ -84,19 +87,21 @@ namespace Notes_Web.Notes
         }
 
         [HttpPut("edit/{id}")]
-        
-        public async Task<ActionResult<NotesResponse>> EditNoteAsync([FromRoute]int id, [FromBody]NoteUpdateRequest update)
+
+        public async Task<ActionResult<NotesResponse>> EditNoteAsync([FromRoute] int id, [FromBody] NoteUpdateRequest update)
         {
             try
             {
                 NotesResponse response = await this._command.UpdateAsync(id, update);
                 return Accepted("", response);
 
-            }catch(NotesNotUpdateException up)
+            }
+            catch (NotesNotUpdateException up)
             {
                 return NotFound(up.Message);
 
-            }catch(NotesNotFoundException nf)
+            }
+            catch (NotesNotFoundException nf)
             {
                 return NotFound(nf.Message);
             }
@@ -108,7 +113,7 @@ namespace Notes_Web.Notes
 
         [HttpGet("find/Title/{title}")]
 
-        public async Task<ActionResult<GetAllNotesDto>> GetNotesByTitle([FromRoute]string title)
+        public async Task<ActionResult<GetAllNotesDto>> GetNotesByTitle([FromRoute] string title)
         {
             try
             {
@@ -116,7 +121,8 @@ namespace Notes_Web.Notes
                 return Accepted("", response);
 
 
-            }catch(NotesNotFoundException nf)
+            }
+            catch (NotesNotFoundException nf)
             {
                 return NotFound(nf.Message);
             }
@@ -125,17 +131,18 @@ namespace Notes_Web.Notes
         }
 
         [HttpGet("find/Id/{id}")]
-        public async Task<ActionResult<NotesResponse>> GetNoteById([FromRoute]int id)
+        public async Task<ActionResult<NotesResponse>> GetNoteById([FromRoute] int id)
         {
             try
             {
 
-                NotesResponse response= await this._query.FindByIdAsync(id);
+                NotesResponse response = await this._query.FindByIdAsync(id);
 
                 return Accepted("", response);
 
 
-            }catch(NotesNotFoundException nf)
+            }
+            catch (NotesNotFoundException nf)
             {
                 return NotFound(nf.Message);
             }
@@ -152,7 +159,8 @@ namespace Notes_Web.Notes
                 GetAllNotes response = await this._query.GetAllTitleAsync();
                 return Ok(response);
 
-            }catch(NotesNotFoundException nf)
+            }
+            catch (NotesNotFoundException nf)
             {
                 return NotFound(nf.Message);
 
@@ -163,7 +171,7 @@ namespace Notes_Web.Notes
 
         }
 
-       
+
 
 
 

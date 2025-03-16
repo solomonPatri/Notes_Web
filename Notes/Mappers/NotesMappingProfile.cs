@@ -13,11 +13,11 @@ namespace Notes_Web.Notes.Mappers
 
             CreateMap <NotesRequest, Note>();
             CreateMap<Note, NotesResponse>();
-            CreateMap<NotesResponse, NotesRequest>();
-            CreateMap< NotesResponse, GetAllNotesDto>();
+            CreateMap<NotesResponse, NoteUpdateRequest>();
+            CreateMap< NotesRequest, NotesResponse>();
             CreateMap<NotesResponse, GetAllNotesDto>();
-                
-
+            CreateMap<GetAllNotesDto, NotesRequest>();
+            CreateMap<IList<Note>, GetAllNotes>();
 
 
         }

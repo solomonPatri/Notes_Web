@@ -20,7 +20,7 @@ namespace Notes_Web.Notes.Repository
 
        Task<GetAllNotes> GetAllTitleAsync();
 
-        Task<NotesResponse> FindNoteByTitleASync(string title);
+        Task<NotesResponse?> FindNoteByTitleAsync(NotesRequest title);
 
 
 

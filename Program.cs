@@ -50,11 +50,12 @@ public class Program
         {
             app.UseSwagger();
             app.UseSwaggerUI();
-           
+            app.UseHttpsRedirection();
+            app.MapControllers();
+
         }
 
-        app.UseHttpsRedirection();
-        app.MapControllers();
+        
 
 
         using (var scope = app.Services.CreateScope())

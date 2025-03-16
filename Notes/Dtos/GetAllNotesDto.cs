@@ -1,4 +1,6 @@
-﻿namespace Notes_Web.Notes.Dtos
+﻿using Notes_Web.Notes.Model;
+
+namespace Notes_Web.Notes.Dtos
 {
     public class GetAllNotesDto
     {

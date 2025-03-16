@@ -6,9 +6,7 @@ namespace Notes_Web.Notes.Dtos
     public class NotesResponse
     {
 
-       
-        public int Id { get; set; }
-
+   
        
         public string Title { get; set; }
 

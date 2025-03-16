@@ -22,8 +22,8 @@ namespace Notes_Web.Notes.Services
 
        public async Task<NotesResponse> CreateNotesAsync(NotesRequest create)
         {
-            NotesResponse responseexist = await _repo.FindNoteByTitleASync(create.Title);
-            if (responseexist == null)
+            NotesResponse responseexist = await _repo.FindNoteByTitleAsync(create);
+            if (responseexist != null)
             {
                 NotesResponse response = await _repo.CreateNotesAsync(create);
 
