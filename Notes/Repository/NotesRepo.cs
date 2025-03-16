@@ -1,12 +1,9 @@
-﻿using AutoMapper;
-using FluentMigrator.Expressions;
-using Notes_Web.Data;
-using Notes_Web.Notes.Dtos;
-using Notes_Web.Notes.Model;
-using System.Data.Entity;
-using Microsoft.EntityFrameworkCore;
+﻿using Notes_Web.Notes.Model;
 using Notes_Web.Notes.Repository;
-using System.Globalization;
+using Notes_Web.Data;
+using Microsoft.EntityFrameworkCore;
+using Notes_Web.Notes.Dtos;
+using AutoMapper;
 
 namespace Notes_Web.Notes.Repository
 {
@@ -25,7 +22,7 @@ namespace Notes_Web.Notes.Repository
 
         public async Task<GetAllNotesDto> GetAllNotesAsync()
         {
-           List<Note> data = await _appdbcontext.Notes.ToListAsync();
+            List<Note> data = await _appdbcontext.Notes.ToListAsync();
 
             var responsenote = data.Select(m => _mapper.Map<NotesResponse>(m)).ToList();
             GetAllNotesDto response = new GetAllNotesDto();
